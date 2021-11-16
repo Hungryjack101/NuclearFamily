@@ -9,7 +9,7 @@ public class Player : MonoBehaviour {
     public float JumpForce;
     public AnimationClip _walk, _jump;
     public Animation _Legs;
-    public Transform _Blade, _GroundCast;
+    public Transform _Blade, _GroundCast, _FirePoint;
     public Camera cam;
     public bool mirror;
 
@@ -20,6 +20,8 @@ public class Player : MonoBehaviour {
     private Rigidbody2D rig;
     private Vector2 _inputAxis;
     private RaycastHit2D _hit;
+    
+    public int health = 200;
 
 	void Start ()
     {
@@ -62,12 +64,14 @@ public class Player : MonoBehaviour {
             rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             transform.localScale = new Vector3(_startScale, _startScale, 1);
             _Blade.transform.rotation = Quaternion.AngleAxis(rot, Vector3.forward);
+            _FirePoint.transform.rotation = Quaternion.AngleAxis(rot, Vector3.forward);
         }
         if (mirror)
         {
             rot = Mathf.Atan2(-dir.y, -dir.x) * Mathf.Rad2Deg;
             transform.localScale = new Vector3(-_startScale, _startScale, 1);
             _Blade.transform.rotation = Quaternion.AngleAxis(rot, Vector3.forward);
+            _FirePoint.transform.rotation = Quaternion.AngleAxis(rot - 180, Vector3.forward);
         }
 
         if (_inputAxis.x != 0)
@@ -104,5 +108,38 @@ public class Player : MonoBehaviour {
     void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, _GroundCast.position);
+    }
+    
+	public void TakeDamage (int damage) 
+    { 
+        health -= damage;
+		if (health <= 0)
+        {
+            Die();
+		}
+	}
+
+	void Die() 
+    { 
+		Destroy(gameObject);
+	}
+    
+    void OnCollisionEnter2D(Collision2D hitInfo)
+    {
+        if (hitInfo.gameObject.tag == "Enemy") {
+            // Vector2 angle = _Blade.transform.rotation.eulerAngles;
+            // rig.AddForce(new Vector2(angle.x, 0));
+            // Debug.Log("Taking Damage");
+            TakeDamage(8);
+        }
+    }
+    
+    
+    public void dotheJump() {
+        // Vector2 angle = _FirePoint.transform.rotation.eulerAngles;
+        // Vector2 new_rot = new Vector2(angle.x, angle.y);
+        // new_rot = new_rot*JumpForce*5;
+        // rig.AddForce(new_rot);
+        // rig.AddForce(new Vector2(JumpForce*5*Mathf.Sin(_Blade.transform.rotation), JumpForce*5*Mathf.Cos(_Blade.transform.rotation)));
     }
 }
