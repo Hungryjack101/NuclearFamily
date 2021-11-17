@@ -21,12 +21,16 @@ public class Player : MonoBehaviour {
     private Vector2 _inputAxis;
     private RaycastHit2D _hit;
     
-    public int health = 200;
+    public int maxHealth = 200;
+    public int current_health;
+    public HealthBar healthBar;
 
 	void Start ()
     {
         rig = gameObject.GetComponent<Rigidbody2D>();
         _startScale = transform.localScale.x;
+        current_health = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
 	}
 
     void Update()
@@ -112,8 +116,9 @@ public class Player : MonoBehaviour {
     
 	public void TakeDamage (int damage) 
     { 
-        health -= damage;
-		if (health <= 0)
+        current_health -= damage;
+        healthBar.SetHealth(current_health);
+		if (current_health <= 0)
         {
             Die();
 		}
