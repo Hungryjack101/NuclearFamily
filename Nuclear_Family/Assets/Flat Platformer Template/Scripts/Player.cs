@@ -24,6 +24,11 @@ public class Player : MonoBehaviour {
     public int maxHealth = 200;
     public int current_health;
     public HealthBar healthBar;
+    
+    public float knockback;
+    public float knockbackLength;
+    public float knockbackCount;
+    public bool knockFromRight;
 
 	void Start ()
     {
@@ -77,30 +82,39 @@ public class Player : MonoBehaviour {
             _Blade.transform.rotation = Quaternion.AngleAxis(rot, Vector3.forward);
             _FirePoint.transform.rotation = Quaternion.AngleAxis(rot - 180, Vector3.forward);
         }
-
-        if (_inputAxis.x != 0)
-        {
-            rig.velocity = new Vector2(_inputAxis.x * WalkSpeed * Time.deltaTime, rig.velocity.y);
-
-            if (_canWalk)
+        
+        if(knockbackCount <= 0) {
+            if (_inputAxis.x != 0)
             {
-                _Legs.clip = _walk;
-                _Legs.Play();
+                rig.velocity = new Vector2(_inputAxis.x * WalkSpeed * Time.deltaTime, rig.velocity.y);
+    
+                if (_canWalk)
+                {
+                    _Legs.clip = _walk;
+                    _Legs.Play();
+                }
             }
-        }
-
-        else
-        {
-            rig.velocity = new Vector2(0, rig.velocity.y);
-        }
-
-        if (_isJump)
-        {
-            rig.AddForce(new Vector2(0, JumpForce));
-            _Legs.clip = _jump;
-            _Legs.Play();
-            _canJump = false;
-            _isJump = false;
+    
+            else
+            {
+                rig.velocity = new Vector2(0, rig.velocity.y);
+            }
+            
+            if (_isJump)
+            {
+                rig.AddForce(new Vector2(0, JumpForce));
+                _Legs.clip = _jump;
+                _Legs.Play();
+                _canJump = false;
+                _isJump = false;
+            }
+        } else {
+            if (knockFromRight) {
+                rig.velocity = new Vector2(-knockback, knockback);
+            } if (!knockFromRight) {
+                rig.velocity = new Vector2(knockback, knockback);
+            }
+            knockbackCount -= Time.deltaTime;
         }
     }
 
@@ -129,16 +143,22 @@ public class Player : MonoBehaviour {
 		Destroy(gameObject);
 	}
     
-    void OnCollisionEnter2D(Collision2D hitInfo)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (hitInfo.gameObject.tag == "Enemy") {
-            // Vector2 angle = _Blade.transform.rotation.eulerAngles;
-            // rig.AddForce(new Vector2(angle.x, 0));
-            // Debug.Log("Taking Damage");
+        if (other.gameObject.tag == "Enemy") {
+            knockbackCount = knockbackLength * 2;
+            if (other.transform.position.x > transform.position.x) {
+                knockFromRight = true;
+            } else {
+                knockFromRight = false;
+            }
             TakeDamage(8);
         }
     }
     
+    // void OnCollisionEnter2D_second(Collider2D other) {
+    // 
+    // }
     
     public void dotheJump() {
         // Vector2 angle = _FirePoint.transform.rotation.eulerAngles;
