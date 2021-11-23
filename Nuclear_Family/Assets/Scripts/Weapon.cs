@@ -12,7 +12,7 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Update()
     {
-        if (Input.GetButtonDown("Fire1")) {
+        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) {
             Shoot();
         }
     }

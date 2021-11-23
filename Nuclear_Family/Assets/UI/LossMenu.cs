@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 
-public class MainMenu : MonoBehaviour  {
+public class LossMenu : MonoBehaviour  {
 
-        public GameObject mainMenuUI;
+        public GameObject lossMenuUI;
 
-        public void Start2(){
+        public void Restart2(){
                 Time.timeScale = 1f;
                 SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
-                SceneManager.LoadScene ("SampleScene");
+                SceneManager.LoadScene ("MainMenu");
         }
 
       public void QuitGame2() {
@@ -22,4 +22,4 @@ public class MainMenu : MonoBehaviour  {
                 Application.Quit();
                 #endif
       }
-}
+  }
