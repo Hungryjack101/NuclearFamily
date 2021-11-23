@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
     public float knockbackLength;
     public float knockbackCount;
     public bool knockFromRight;
+    public bool dontdoit = false;
 
 	void Start ()
     {
@@ -109,9 +110,10 @@ public class Player : MonoBehaviour {
                 _isJump = false;
             }
         } else {
-            if (knockFromRight) {
+            if (dontdoit) {
+            } else if (knockFromRight) {
                 rig.velocity = new Vector2(-knockback, knockback);
-            } if (!knockFromRight) {
+            } else if (!knockFromRight) {
                 rig.velocity = new Vector2(knockback, knockback);
             }
             knockbackCount -= Time.deltaTime;
@@ -147,6 +149,7 @@ public class Player : MonoBehaviour {
     {
         if (other.gameObject.tag == "Enemy") {
             knockbackCount = knockbackLength * 2;
+            dontdoit = false;
             if (other.transform.position.x > transform.position.x) {
                 knockFromRight = true;
             } else {
@@ -156,15 +159,22 @@ public class Player : MonoBehaviour {
         }
     }
     
-    // void OnCollisionEnter2D_second(Collider2D other) {
-    // 
-    // }
-    
     public void dotheJump() {
-        // Vector2 angle = _FirePoint.transform.rotation.eulerAngles;
-        // Vector2 new_rot = new Vector2(angle.x, angle.y);
-        // new_rot = new_rot*JumpForce*5;
-        // rig.AddForce(new_rot);
-        // rig.AddForce(new Vector2(JumpForce*5*Mathf.Sin(_Blade.transform.rotation), JumpForce*5*Mathf.Cos(_Blade.transform.rotation)));
+        if (!dontdoit) {
+            float X = cam.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
+            float Y = cam.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
+            float norm_X = X/Mathf.Sqrt(X*X+Y*Y);
+            float norm_Y = Y/Mathf.Sqrt(X*X+Y*Y);
+            Debug.Log("X value: " + norm_X);
+            if (norm_Y > 0.5f) {
+                norm_Y = 0.5f;
+            }
+            if (norm_Y < -0.5f) {
+                norm_Y = -0.5f;
+            }
+            rig.velocity = new Vector2(-20*norm_X,-50*norm_Y);
+            // rig.AddForce(new Vector2(-2000*norm_X, 0));
+            dontdoit = false;
+        }
     }
 }
