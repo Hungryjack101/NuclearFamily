@@ -21,7 +21,7 @@ public class bullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
         if (hitInfo.gameObject.tag == "Platform") {
-            Instantiate(impactPlatEffect, transform.position, Quaternion.identity);
+            Instantiate(impactPlatEffect, transform.position, transform.rotation);
         } else {
             Enemy enemy = hitInfo.GetComponent<Enemy>();
             if (enemy != null) {

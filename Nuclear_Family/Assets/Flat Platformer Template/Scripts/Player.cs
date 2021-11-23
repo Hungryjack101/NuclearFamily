@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
     public float knockbackLength;
     public float knockbackCount;
     public bool knockFromRight;
-    public bool dontdoit = false;
+    public bool gunjump = false;
 
 	void Start ()
     {
@@ -110,7 +110,12 @@ public class Player : MonoBehaviour {
                 _isJump = false;
             }
         } else {
-            if (dontdoit) {
+            if (gunjump) {
+                float X = cam.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
+                float Y = cam.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
+                float norm_X = X/Mathf.Sqrt(X*X+Y*Y);
+                float norm_Y = Y/Mathf.Sqrt(X*X+Y*Y);
+                rig.velocity = new Vector2(-18*norm_X,-18*norm_Y);
             } else if (knockFromRight) {
                 rig.velocity = new Vector2(-knockback, knockback);
             } else if (!knockFromRight) {
@@ -149,7 +154,7 @@ public class Player : MonoBehaviour {
     {
         if (other.gameObject.tag == "Enemy") {
             knockbackCount = knockbackLength * 2;
-            dontdoit = false;
+            gunjump = false;
             if (other.transform.position.x > transform.position.x) {
                 knockFromRight = true;
             } else {
@@ -160,21 +165,7 @@ public class Player : MonoBehaviour {
     }
     
     public void dotheJump() {
-        if (!dontdoit) {
-            float X = cam.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
-            float Y = cam.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
-            float norm_X = X/Mathf.Sqrt(X*X+Y*Y);
-            float norm_Y = Y/Mathf.Sqrt(X*X+Y*Y);
-            Debug.Log("X value: " + norm_X);
-            if (norm_Y > 0.5f) {
-                norm_Y = 0.5f;
-            }
-            if (norm_Y < -0.5f) {
-                norm_Y = -0.5f;
-            }
-            rig.velocity = new Vector2(-20*norm_X,-50*norm_Y);
-            // rig.AddForce(new Vector2(-2000*norm_X, 0));
-            dontdoit = false;
-        }
+        gunjump = true;
+        knockbackCount = knockbackLength * 2;
     }
 }
