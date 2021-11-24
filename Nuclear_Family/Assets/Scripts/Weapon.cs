@@ -10,9 +10,16 @@ public class Weapon : MonoBehaviour
     // public Rigidbody2D rig;
     public int GunForce = 30;
     // Start is called before the first frame update
+    
+    private PauseMenu pauseScript;
+    void Start() {
+        
+    }
+    
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) {
+        bool GamePaused = PauseMenu.GameisPaused;
+        if ((Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) && !GamePaused) {
             Shoot();
         }
     }
