@@ -13,7 +13,6 @@ public class GameHandler : MonoBehaviour{
 
         void Start () { //UpdateScore (); 
             playerscript = GameObject.Find("Rick").GetComponent<Player>();
-            Debug.Log(SceneManager.GetActiveScene());
         }
 
         void Update(){         //delete this quit functionality when a Pause Menu is added
@@ -25,7 +24,6 @@ public class GameHandler : MonoBehaviour{
 
         public void UpdatePlayerStat(int amount){
                 playerStat += amount;
-                Debug.Log("Current Player Stat = " + playerStat); 
         //      UpdateScore ();
         }
 
