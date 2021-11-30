@@ -16,7 +16,7 @@ public class GameHandler : MonoBehaviour{
         }
 
         void Update(){         //delete this quit functionality when a Pause Menu is added
-            if(playerscript.current_health<=0) {
+            if(playerscript.current_health<=0 || playerscript._Blade.position.y < -20) {
                 SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
                 SceneManager.LoadScene ("LossScene");
             }
