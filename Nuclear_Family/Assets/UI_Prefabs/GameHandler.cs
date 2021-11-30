@@ -20,6 +20,10 @@ public class GameHandler : MonoBehaviour{
                 SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
                 SceneManager.LoadScene ("LossScene");
             }
+            if(playerscript.nextLevel) {
+                SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene ("WinScene");
+            }
         }
 
         public void UpdatePlayerStat(int amount){

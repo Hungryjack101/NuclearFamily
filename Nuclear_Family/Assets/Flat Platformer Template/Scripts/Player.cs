@@ -30,6 +30,8 @@ public class Player : MonoBehaviour {
     public float knockbackCount;
     public bool knockFromRight;
     public bool gunjump = false;
+    
+    public bool nextLevel = false;
 
 	void Start ()
     {
@@ -161,6 +163,9 @@ public class Player : MonoBehaviour {
                 knockFromRight = false;
             }
             TakeDamage(8);
+        }
+        if(other.gameObject.tag == "Trophy") {
+            nextLevel = true;
         }
     }
     
