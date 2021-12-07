@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour  {
         public void Start2(){
                 Time.timeScale = 1f;
                 SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
-                SceneManager.LoadScene ("SampleScene");
+                SceneManager.LoadScene ("Level0");
         }
 
       public void QuitGame2() {

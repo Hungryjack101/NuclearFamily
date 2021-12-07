@@ -22,7 +22,7 @@ public class GameHandler : MonoBehaviour{
             }
             if(playerscript.nextLevel) {
                 SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
-                SceneManager.LoadScene ("WinScene");
+                SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex+1);
             }
         }
 
