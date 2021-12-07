@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour {
     public float max=3f;
     public float speed;
     public bool updown;
+    // public Animator animator = GetComponent<Animator>();
     // public GameObject deathEffect;
     
     void Start() {
@@ -27,9 +28,9 @@ public class Enemy : MonoBehaviour {
     
     void Update() {
         if (updown) {
-            transform.position =new Vector2(transform.position.x, Mathf.PingPong(Time.time*speed,max-min)+min);
-        } else {
-            transform.position =new Vector2(Mathf.PingPong(Time.time*speed,max-min)+min, transform.position.y);
+            transform.position = new Vector2(transform.position.x, Mathf.PingPong(Time.time*speed,max-min)+min);
+        } else {    
+            transform.position = new Vector2(Mathf.PingPong(Time.time*speed,max-min)+min, transform.position.y);
         }
     }
     
