@@ -16,6 +16,8 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame update
     
     private PauseMenu pauseScript;
+    
+    public AudioSource GunShot;
     void Start() {
         
     }
@@ -42,5 +44,6 @@ public class Weapon : MonoBehaviour
     {
         Instantiate(bulletprefab, firepoint.position, firepoint.rotation);
         Rick.dotheJump();
+        GunShot.Play();
     }
 }
