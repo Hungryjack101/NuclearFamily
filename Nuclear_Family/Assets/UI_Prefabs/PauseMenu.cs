@@ -51,6 +51,7 @@ public class PauseMenu : MonoBehaviour  {
         }
 
         public void Restart(){
+                GameisPaused = false;
                 Time.timeScale = 1f;
                 //restart the game:
                 SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
@@ -58,6 +59,7 @@ SceneManager.LoadScene ("MainMenu");
         }
 
       public void QuitGame() {
+                GameisPaused = false;
                 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
                 #else
