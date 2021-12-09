@@ -55,16 +55,10 @@ public class PauseMenu : MonoBehaviour  {
                 Time.timeScale = 1f;
                 //restart the game:
                 SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
-SceneManager.LoadScene ("MainMenu");
         }
 
       public void QuitGame() {
-                GameisPaused = false;
-                #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-                #else
-                Application.Quit();
-                #endif
+                SceneManager.LoadScene ("MainMenu");
       }
 
         public void SetLevel (float sliderValue){

@@ -8,11 +8,18 @@ using UnityEngine.Audio;
 public class LossMenu : MonoBehaviour  {
 
         public GameObject lossMenuUI;
-
+        public GameHandler gamehandlerscript;
+        public int whereUWere;
+        
         public void Restart2(){
                 Time.timeScale = 1f;
-                SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
-                SceneManager.LoadScene ("MainMenu");
+                gamehandlerscript = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+                GameHandler.whereUWere = whereUWere;
+                SceneManager.LoadScene (whereUWere);
+        }
+        
+        public void MainMen() {
+            SceneManager.LoadScene ("MainMenu");
         }
 
       public void QuitGame2() {
