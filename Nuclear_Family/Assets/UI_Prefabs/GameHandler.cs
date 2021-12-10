@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameHandler : MonoBehaviour{
 
@@ -10,8 +11,9 @@ public class GameHandler : MonoBehaviour{
         private GameObject rick;
         private Player playerscript;
         public bool[] levels;
-        public int numLevels = 10;
+        public int numLevels = 6;
         public static int whereUWere;
+        public int numDeaths;
         //public GameObject textGameObject;
 
         void Start () { //UpdateScore (); 
@@ -20,20 +22,28 @@ public class GameHandler : MonoBehaviour{
                 levels[i] = false;
             }
             levels[0] = true;
-            playerscript = GameObject.Find("Rick").GetComponent<Player>();
-        }
+            DontDestroyOnLoad(this);
+        } 
 
         void Update(){         //delete this quit functionality when a Pause Menu is added
-            if(playerscript.current_health<=0 || playerscript._Blade.position.y < -20) {
-                SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
-                whereUWere = SceneManager.GetActiveScene().buildIndex;
-                SceneManager.LoadScene ("LossScene");
-                playerscript.current_health=100;
+            try {
+                if (playerscript==null) {
+                    playerscript = GameObject.Find("Rick").GetComponent<Player>();
+                }
+                if(playerscript.current_health<=0 || playerscript._Blade.position.y < -20) {
+                    whereUWere = SceneManager.GetActiveScene().buildIndex;
+                    SceneManager.LoadScene("LossScene");
+                    numDeaths+=1;
+                }
+                if(playerscript.nextLevel) {
+                    levels[SceneManager.GetActiveScene().buildIndex] = true;
+                    SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
+                    playerscript.nextLevel=false;
+                    SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex+1);
+                }
             }
-            if(playerscript.nextLevel) {
-                levels[SceneManager.GetActiveScene().buildIndex+1] = true;
-                SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
-                SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex+1);
+            catch(NullReferenceException e) {
+                e = null;
             }
         }
 

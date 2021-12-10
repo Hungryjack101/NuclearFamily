@@ -9,20 +9,23 @@ public class LossMenu : MonoBehaviour  {
 
         public GameObject lossMenuUI;
         public GameHandler gamehandlerscript;
-        public int whereUWere;
+        public int whereUWereLoss;
         
-        public void Restart2(){
-                Time.timeScale = 1f;
-                gamehandlerscript = GameObject.Find("GameHandler").GetComponent<GameHandler>();
-                GameHandler.whereUWere = whereUWere;
-                SceneManager.LoadScene (whereUWere);
+        public void Start(){
+            gamehandlerscript = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+            whereUWereLoss = GameHandler.whereUWere;
+        }
+        
+        public void RestartLossMenu(){
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(whereUWereLoss);
         }
         
         public void MainMen() {
             SceneManager.LoadScene ("MainMenu");
         }
 
-      public void QuitGame2() {
+      public void QuitGameLossMenu() {
                 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
                 #else

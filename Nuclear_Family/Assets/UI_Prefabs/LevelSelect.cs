@@ -18,9 +18,12 @@ public class LevelSelect : MonoBehaviour  {
         numLevels = gamehandlerscript.numLevels;
         
         levelObjs = new GameObject[numLevels];
-        levelObjs[0] = GameObject.Find("Level0");
-        levelObjs[1] = GameObject.Find("Level1");
-        levelObjs[5] = GameObject.Find("Level5");
+        levelObjs[0] = GameObject.Find("Level0Button");
+        levelObjs[1] = GameObject.Find("Level1Button");
+        levelObjs[2] = GameObject.Find("Level2Button");
+        levelObjs[3] = GameObject.Find("Level3Button");
+        levelObjs[4] = GameObject.Find("Level4Button");
+        levelObjs[5] = GameObject.Find("Level5Button");
         
     }
     
