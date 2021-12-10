@@ -32,6 +32,7 @@ public class Player : MonoBehaviour {
     public bool gunjump = false;
     
     public bool nextLevel = false;
+    private GameHandler gamehandler;
 
 	void Start ()
     {
@@ -39,10 +40,19 @@ public class Player : MonoBehaviour {
         _startScale = transform.localScale.x;
         current_health = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        gamehandler = GameObject.Find("GameHandler").GetComponent<GameHandler>();
 	}
 
     void Update()
     {
+        if(_Blade.position.y < -20) {
+            Die();
+        }
+        if (nextLevel) {
+            nextLevel=false;
+            gamehandler.GoToNextLevel();
+            
+        }
         if (_hit = Physics2D.Linecast(new Vector2(_GroundCast.position.x, _GroundCast.position.y + 0.2f), _GroundCast.position))
         {
             if (!_hit.transform.CompareTag("Player"))
@@ -149,6 +159,7 @@ public class Player : MonoBehaviour {
 
 	void Die() 
     { 
+        gamehandler.RickIsDead();
 		Destroy(gameObject);
 	}
     
