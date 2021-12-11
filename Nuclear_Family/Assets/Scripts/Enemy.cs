@@ -18,11 +18,11 @@ public class Enemy : MonoBehaviour {
         current_health = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         if (updown) {
-            min=transform.position.y-2;
-            max=transform.position.y+2;
+            min=transform.position.y-min;
+            max=transform.position.y+max;
         } else {
-            min=transform.position.x-2;
-            max=transform.position.x+2;
+            min=transform.position.x-min;
+            max=transform.position.x+max;
         }
     }
     

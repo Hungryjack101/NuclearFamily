@@ -11,6 +11,7 @@ public class SmartEnemy : MonoBehaviour {
     public bool omnidirectional;
     private GameObject rick;
     private Player playerscript;
+    private bool go = true;
     // public Animator animator = GetComponent<Animator>();
     // public GameObject deathEffect;
     
@@ -20,14 +21,23 @@ public class SmartEnemy : MonoBehaviour {
         playerscript = GameObject.Find("Rick").GetComponent<Player>();
     }
     
-    void Update() {
-        float X = playerscript._Blade.transform.position.x;
-        float Y = 0f;
-        if (omnidirectional == true) {
-            Y = playerscript._Blade.transform.position.x;
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Platform") {
+            go = false;
         }
-        float step = speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(X,Y), speed * Time.deltaTime);
+    }
+    
+    void Update() {
+        if (go == true) {
+            float X = playerscript._Blade.transform.position.x;
+            float Y = 0f;
+            if (omnidirectional == true) {
+                Y = playerscript._Blade.transform.position.x;
+            }
+            float step = speed * Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(X,Y), speed * Time.deltaTime);
+        }
     }
     
 	public void TakeDamage (int damage) 
