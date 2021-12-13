@@ -11,33 +11,22 @@ public class SmartEnemy : MonoBehaviour {
     public bool omnidirectional;
     private GameObject rick;
     private Player playerscript;
-    private bool go = true;
-    // public Animator animator = GetComponent<Animator>();
-    // public GameObject deathEffect;
+    private Rigidbody2D rig;
     
     void Start() {
         current_health = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         playerscript = GameObject.Find("Rick").GetComponent<Player>();
+        rig = gameObject.GetComponent<Rigidbody2D>();
     }
-    
-    void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.tag == "Platform") {
-            go = false;
-        }
-    }
-    
+
     void Update() {
-        if (go == true) {
-            float X = playerscript._Blade.transform.position.x;
-            float Y = 0f;
-            if (omnidirectional == true) {
-                Y = playerscript._Blade.transform.position.x;
-            }
-            float step = speed * Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(X,Y), speed * Time.deltaTime);
+        Vector3 dir = (playerscript._Blade.transform.position - transform.position).normalized;
+        dir.z = 0f;
+        if (!omnidirectional) {
+            dir.y = 0f;
         }
+        rig.MovePosition(transform.position + dir * speed * Time.deltaTime);
     }
     
 	public void TakeDamage (int damage) 
@@ -52,7 +41,6 @@ public class SmartEnemy : MonoBehaviour {
 
 	void Die() 
     { 
-        // Instantiate(deathEffect, transform.position, Quaternion.identity);
 		Destroy(gameObject);
 	}
 }
