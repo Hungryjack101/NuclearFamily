@@ -11,8 +11,6 @@ public class Enemy : MonoBehaviour {
     public float max;
     public float speed;
     public bool updown;
-    // public Animator animator = GetComponent<Animator>();
-    // public GameObject deathEffect;
     
     void Start() {
         current_health = maxHealth;
@@ -33,7 +31,6 @@ public class Enemy : MonoBehaviour {
             transform.position = new Vector2(Mathf.PingPong(Time.time*speed,max-min)+min, transform.position.y);
         }
     }
-    
 	public void TakeDamage (int damage) 
     { 
         current_health -= damage;
