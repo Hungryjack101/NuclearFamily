@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour {
 	public int maxHealth = 100;
     public int current_health;
     public HealthBar healthBar;
-    public float min=2f;
-    public float max=3f;
+    public float min;
+    public float max;
     public float speed;
     public bool updown;
     // public Animator animator = GetComponent<Animator>();
