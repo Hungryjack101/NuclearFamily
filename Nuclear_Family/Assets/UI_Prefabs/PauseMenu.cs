@@ -25,6 +25,8 @@ public class PauseMenu : MonoBehaviour  {
         void Start (){
                 SetLevel(volumeLevel);
                 pauseMenuUI.SetActive(false);
+                GameisPaused = false;
+                // DontDestroyOnLoad(this);
         }
 
         void Update (){
@@ -59,6 +61,7 @@ public class PauseMenu : MonoBehaviour  {
         }
 
       public void QuitGame() {
+                Time.timeScale = 1f;
                 GameisPaused = false;
                 pauseMenuUI.SetActive(false);
                 SceneManager.LoadScene ("MainMenu");
