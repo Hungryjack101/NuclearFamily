@@ -33,7 +33,6 @@ public class Player : MonoBehaviour {
     
     public bool nextLevel = false;
     private GameHandler gamehandler;
-    bool inAcid = false;
 
 	void Start ()
     {
@@ -154,10 +153,6 @@ public class Player : MonoBehaviour {
         healthBar.SetHealth(current_health);
 		if (current_health <= 0)
         {
-            if (inAcid) {
-                System.Threading.Thread.Sleep(2000);
-                inAcid = false;
-            }
             Die();
 		}
 	}
@@ -184,7 +179,6 @@ public class Player : MonoBehaviour {
             nextLevel = true;
         }
         if(other.gameObject.tag == "Acid") {
-            inAcid = true;
             TakeDamage(100);
         }
     }

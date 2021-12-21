@@ -29,6 +29,9 @@ public class Dialogue : MonoBehaviour
                 StopAllCoroutines();
                 textComponent.text = lines[index];
             }
+        } else if (Input.GetKeyDown(KeyCode.Q)) {
+            gameObject.SetActive(false);
+            Destroy(wizardgameObject);
         }
     }
     
